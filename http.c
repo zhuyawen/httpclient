@@ -29,6 +29,7 @@
 	#include <netdb.h>
 	#include <strings.h>
 
+	#define _strdup strdup
 	#define _stricmp strcasecmp
 	#define _strnicmp strncasecmp
 
@@ -544,7 +545,7 @@ static int on_body_cb(http_parser* parser, const char *at, size_t length)
 		
 		if(http->content_length > 0)
 		{
-			/* 直接一次分配足够空间，避免多次分配 */
+			/* 鐩存帴涓�娆″垎閰嶈冻澶熺┖闂达紝閬垮厤澶氭鍒嗛厤 */
 			http->body = (char*)calloc(1, http->content_length + 1);
 		}
 		else
@@ -786,7 +787,7 @@ static int http_connect_host(ft_http_client_t* http, const char* url, struct htt
 	{
 		struct linger linger;
 		linger.l_onoff = 1;
-		linger.l_linger = 0;  /* 关闭close wait */
+		linger.l_linger = 0;  /* 鍏抽棴close wait */
 
 		if(setsockopt(http->fd,SOL_SOCKET, SO_LINGER,(const char *) &linger,sizeof(linger)) != 0)
 		{

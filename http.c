@@ -131,7 +131,7 @@ struct ft_http_client_t
 #endif
 
 #define free_member(member) if((member)) { free(member); (member) = NULL; }
-#define close_socket(fd) if(fd != HTTP_INVALID_SOCKET) { socket_close(fd); fd = HTTP_INVALID_SOCKET; }
+#define close_socket(fd) if((fd != HTTP_INVALID_SOCKET) && ((fd != 0) && (fd != 1) && (fd != 2))) { printf("close socket fd %d\n", fd);socket_close(fd); fd = HTTP_INVALID_SOCKET;}	//fix close std handle: 0, 1, 2
 #define close_file(pf) if(pf != NULL) { fclose(pf); pf = NULL; }
 
 #ifdef WINCE
